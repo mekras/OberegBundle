@@ -11,7 +11,7 @@ namespace Mekras\OberegBundle;
 /**
  * Main bundle class
  *
- * @since x.xx
+ * @since 1.00
  */
 class MekrasOberegBundle
 {
