@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Параметры PhpDocumentor
+  -
+  - @version 1.00
+  -->
+
+<phpdoc>
+    <title>OberegBundle API</title>
+    <files>
+        <directory>src</directory>
+    </files>
+    <transformations>
+        <template name="clean" />
+    </transformations>
+</phpdoc>
