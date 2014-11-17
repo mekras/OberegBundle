@@ -8,11 +8,13 @@
  */
 namespace Mekras\OberegBundle;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 /**
  * Main bundle class
  *
  * @since 1.00
  */
-class MekrasOberegBundle
+class MekrasOberegBundle extends Bundle
 {
 }
