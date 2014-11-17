@@ -11,7 +11,7 @@ namespace Mekras\OberegBundle\Debug\Formatter;
 /**
  * Tool for formatting stack traces
  *
- * @since x.xx
+ * @since 1.00
  */
 class StackTraceFormatter
 {
@@ -29,7 +29,7 @@ class StackTraceFormatter
      *
      * @return string
      *
-     * @since x.xx
+     * @since 1.00
      */
     public function format(array $stack)
     {
@@ -47,7 +47,7 @@ class StackTraceFormatter
      *
      * @return int
      *
-     * @since x.xx
+     * @since 1.00
      */
     public function getStringMaxLength()
     {
@@ -61,7 +61,7 @@ class StackTraceFormatter
      *
      * @return void
      *
-     * @since x.xx
+     * @since 1.00
      */
     public function setStringMaxLength($characters)
     {
