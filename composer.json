@@ -17,5 +17,11 @@
     "require": {
         "php": "~5.4"
     },
+    "require-dev": {
+        "monolog/monolog": "~1.11"
+    },
+    "suggest": {
+        "monolog/monolog": "Which can be extended with BacktraceProcessor"
+    },
     "minimum-stability": "dev"
 }
