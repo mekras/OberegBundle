@@ -1,7 +1,7 @@
 {
     "name": "mekras/obereg-bundle",
+    "type": "symfony-bundle",
     "description": "Symfony error handling bundle",
-    "minimum-stability": "dev",
     "license": "MIT",
     "authors": [
         {
@@ -16,5 +16,6 @@
     },
     "require": {
         "php": "~5.4"
-    }
+    },
+    "minimum-stability": "dev"
 }
