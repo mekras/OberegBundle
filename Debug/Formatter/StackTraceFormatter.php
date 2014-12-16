@@ -116,16 +116,16 @@ class StackTraceFormatter
     private function convertArgToString($arg)
     {
         switch (true) {
-            case is_object($arg):
-                $arg = get_class($arg);
-                break;
-
-            case is_array($arg):
+            case is_array($arg): // is_array is faster than is_string and is_object
                 $arg = 'Array';
                 break;
 
-            case is_string($arg):
+            case is_string($arg): // is_string is faster than is_object
                 $arg = "'" . mb_substr($arg, 0, $this->getStringMaxLength(), 'utf-8') . "'";
+                break;
+
+            case is_object($arg):
+                $arg = get_class($arg);
                 break;
 
             default:
