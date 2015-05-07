@@ -8,6 +8,7 @@
  */
 namespace Mekras\OberegBundle\Monolog\Processor;
 
+use Exception;
 use Mekras\OberegBundle\Debug\Formatter\StackTraceFormatter;
 use Monolog\Logger;
 
@@ -63,15 +64,31 @@ class BacktraceProcessor
             return $record;
         }
 
-        $backtrace = debug_backtrace();
-
-        /* Skipping Monolog part of stack */
-        for ($i = 0; $i < 3; $i++) {
-            array_shift($backtrace);
+        if (!array_key_exists('context', $record)) {
+            $record['context'] = [];
         }
 
-        $formatter = $this->getFormatter();
-        $record['extra']['backtrace'] = $formatter->format($backtrace);
+        if (array_key_exists('exception', $record['context'])) {
+
+            /* Symfony exception listener adds exception to context. We can use it. */
+
+            $exception = $record['context']['exception'];
+            if ($exception instanceof Exception) {
+                $record['extra']['backtrace'] = $exception->getTraceAsString();
+            }
+
+        } else {
+
+            $backtrace = debug_backtrace();
+
+            /* Skipping Monolog part of stack */
+            for ($i = 0; $i < 3; $i++) {
+                array_shift($backtrace);
+            }
+
+            $formatter = $this->getFormatter();
+            $record['extra']['backtrace'] = $formatter->format($backtrace);
+        }
 
         return $record;
     }
@@ -83,7 +100,7 @@ class BacktraceProcessor
      */
     private function getFormatter()
     {
-        if (is_null($this->formatter)) {
+        if (null === $this->formatter) {
             $this->formatter = new StackTraceFormatter();
         }
         return $this->formatter;
