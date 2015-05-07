@@ -26,7 +26,7 @@ class BacktraceProcessorTest extends \PHPUnit_Framework_TestCase
         $processor = new BacktraceProcessor();
         $record = ['level' => Logger::WARNING];
         $record = $processor->__invoke($record);
-        $this->assertArrayHasKey('backtrace', $record['extra']);
+        static::assertArrayHasKey('backtrace', $record['extra']);
     }
 
     /**
@@ -42,8 +42,8 @@ class BacktraceProcessorTest extends \PHPUnit_Framework_TestCase
         $longString = $shortString . $shortString;
         $record = $foo($longString);
 
-        $this->assertNotContains($longString, $record['extra']['backtrace']);
-        $this->assertContains($shortString, $record['extra']['backtrace']);
+        static::assertNotContains($longString, $record['extra']['backtrace']);
+        static::assertContains($shortString, $record['extra']['backtrace']);
     }
 
     /**
