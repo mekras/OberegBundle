@@ -47,6 +47,18 @@ class BacktraceProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check usage of exception from context
+     */
+    public function testExceptionFromContext()
+    {
+        $processor = new BacktraceProcessor();
+        $record = ['level' => Logger::ERROR, 'context' => ['exception' => new \Exception('foo')]];
+        $record = $processor->__invoke($record);
+        static::assertArrayHasKey('backtrace', $record['extra']);
+        static::assertContains('testExceptionFromContext', $record['extra']['backtrace']);
+    }
+
+    /**
      * Emulating processor call from Monolog code
      *
      * @param int $level message severity
