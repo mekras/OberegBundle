@@ -100,7 +100,7 @@ class BacktraceProcessor
      */
     private function getFormatter()
     {
-        if (is_null($this->formatter)) {
+        if (null === $this->formatter) {
             $this->formatter = new StackTraceFormatter();
         }
         return $this->formatter;
