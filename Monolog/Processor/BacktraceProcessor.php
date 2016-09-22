@@ -1,10 +1,10 @@
 <?php
 /**
- * Obereg Bundle
+ * Obereg Bundle.
  *
  * @copyright 2014, Михаил Красильников <m.krasilnikov@yandex.ru>
- * @author Михаил Красильников <m.krasilnikov@yandex.ru>
- * @license http://opensource.org/licenses/MIT MIT
+ * @author    Михаил Красильников <m.krasilnikov@yandex.ru>
+ * @license   http://opensource.org/licenses/MIT MIT
  */
 namespace Mekras\OberegBundle\Monolog\Processor;
 
@@ -13,28 +13,28 @@ use Mekras\OberegBundle\Debug\Formatter\StackTraceFormatter;
 use Monolog\Logger;
 
 /**
- * Monolog processor which adds call stack to log messages
+ * Monolog processor which adds call stack to log messages.
  */
 class BacktraceProcessor
 {
     /**
-     * Lowest severity needed to add stack trace
+     * Lowest severity needed to add stack trace.
      *
      * @var int
      */
     private $level;
 
     /**
-     * Stack trace formatter
+     * Stack trace formatter.
      *
      * @var StackTraceFormatter|null
      */
     private $formatter = null;
 
     /**
-     * Creates new processor
+     * Creates new processor.
      *
-     * @param int|string $level lowest severity needed to add stack trace
+     * @param int|string $level Lowest severity needed to add stack trace.
      */
     public function __construct($level = Logger::WARNING)
     {
@@ -42,7 +42,7 @@ class BacktraceProcessor
     }
 
     /**
-     * Adds stack trace to log record
+     * Adds stack trace to log record.
      *
      * @param array $record
      *
@@ -59,7 +59,7 @@ class BacktraceProcessor
             $record['extra'] = [];
         }
 
-        // Do nothing if stack already exists
+        // Do nothing if stack already exists.
         if (array_key_exists('backtrace', $record['extra'])) {
             return $record;
         }
@@ -68,17 +68,21 @@ class BacktraceProcessor
             $record['context'] = [];
         }
 
-        if (array_key_exists('exception', $record['context'])) {
+        // Use backtrace from context if possible.
+        if (array_key_exists('backtrace', $record['context'])) {
+            $record['extra']['backtrace'] = $record['context']['backtrace'];
 
+            return $record;
+        }
+
+        if (array_key_exists('exception', $record['context'])) {
             /* Symfony exception listener adds exception to context. We can use it. */
 
             $exception = $record['context']['exception'];
             if ($exception instanceof Exception) {
                 $record['extra']['backtrace'] = $exception->getTraceAsString();
             }
-
         } else {
-
             $backtrace = debug_backtrace();
 
             /* Skipping Monolog part of stack */
@@ -94,7 +98,7 @@ class BacktraceProcessor
     }
 
     /**
-     * Returns stack trace formatter
+     * Returns stack trace formatter.
      *
      * @return StackTraceFormatter
      */
@@ -103,6 +107,7 @@ class BacktraceProcessor
         if (null === $this->formatter) {
             $this->formatter = new StackTraceFormatter();
         }
+
         return $this->formatter;
     }
 }
